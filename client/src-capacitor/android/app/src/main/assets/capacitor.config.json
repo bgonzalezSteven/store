@@ -3,8 +3,5 @@
   "appName": "StevenApp",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
-  "webDir": "www",
-  "server": {
-    "url": "http://192.168.18.224:8080"
-  }
+  "webDir": "www"
 }
