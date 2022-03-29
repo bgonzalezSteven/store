@@ -18,7 +18,7 @@
       dense
       rounded
       outlined
-      label="Email"
+      label="Correo"
       type="email"
       v-model="form.email"
     />
@@ -28,7 +28,7 @@
       dense
       rounded
       outlined
-      label="Name"
+      label="Nombre"
       v-model="form.username"
     />
     <q-input
@@ -41,10 +41,9 @@
       dense
       rounded
       outlined
-      label="Password"
+      label="Contraseña"
       v-model="form.password"
       :type="isPwd ? 'password' : 'text'"
-      hint="Password with toggle"
     >
       <template v-slot:append>
         <q-icon
@@ -64,10 +63,9 @@
       dense
       rounded
       outlined
-      label="Password"
+      label="Contraseña"
       v-model="form.confirmPassword"
       :type="isPwd2 ? 'password' : 'text'"
-      hint="Password with toggle"
     >
       <template v-slot:append>
         <q-icon
@@ -81,7 +79,7 @@
       <q-btn
         class="full-width"
         color="primary"
-        label="Register"
+        label="Registrar"
         type="submit"
         rounded
         @click="save"

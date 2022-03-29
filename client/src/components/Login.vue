@@ -1,11 +1,11 @@
 <template>
-  <q-form class="q-gutter-md">
+  <q-form class="q-pt-xl q-gutter-md">
     <q-input
       type="email"
       dense
       rounded
       outlined
-      label="Email"
+      label="Correo"
       v-model="form.email"
     >
     </q-input>
@@ -13,7 +13,7 @@
       dense
       rounded
       outlined
-      label="Password"
+      label="Contraseña"
       type="password"
       v-model="form.password"
     >
@@ -28,7 +28,7 @@
         block
         @click="save"
       >
-        Login
+        Acceder
       </vs-button>
       <div class="col text-center q-mt-sm">
         <div class="row text-center justify-center items-center">

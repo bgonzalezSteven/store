@@ -13,7 +13,7 @@
       <div class="center">
         <vs-table dark>
           <template #header>
-            <vs-input v-model="search" border placeholder="Search" />
+            <vs-input block v-model="search" border placeholder="Search" />
           </template>
           <template slot="thead">
             <vs-tr>

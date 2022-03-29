@@ -11,6 +11,8 @@ const routes = [
       { path: '/rol/edit_rol/:id', component: () => import('pages/Admin/Role/Form.vue'), meta: { permission: 'configuration.role'} },
       // Rutas de listado de usuarios registrados
       { path: '/control', component: () => import('pages/Admin/Business/List.vue'), meta: { permission: 'configuration.bussines' } },
+      // Rutas del negocio
+      { path: '/information', component: () => import('pages/Store/Information/Form.vue'), meta: { permission: 'bussines.information' } },
     ]
   },
 

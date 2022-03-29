@@ -36,6 +36,7 @@ addPrefixToGroup(
     // Insertar rutas sin protección de autenticación aquí
     Route.post("login", "UserController.login");
     Route.post("register", "UserController.store");
+    Route.get('public/profilePhotos/:dir', 'StoreController.getFile')
   })
 );
 
@@ -59,6 +60,13 @@ addPrefixToGroup(
     Route.delete('role/:id', 'RolController.destroy')
     Route.get('permissions', 'PermissionController.index')
     // Rutas para la creacion del Roles del sistema //
+
+
+    // Rutas de acceso a los negocios //
+    Route.get('information', 'StoreController.index')
+    Route.post('information', 'StoreController.store')
+
+    // Rutas de acceso a los negocios //
 
     
   }).middleware("auth")

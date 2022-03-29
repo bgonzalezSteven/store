@@ -1,82 +1,100 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-header style="border-radius: 0em 0em 2em 2em" class="text-black">
-      <q-toolbar
-        style="border-radius: 0em 0em 2em 2em"
-        class="bg-primary text-white"
+  <q-layout view="lHh LpR lFf" class="bg-grey-2">
+    <div class="header-backup">
+      <q-header
+        style="
+          height: 75px;
+          margin-top: 16px;
+          transform: translateY(0px);
+          left: 16px;
+          right: 16px;
+          border-radius: 1em;
+        "
+        class="text-black"
       >
-        <q-btn dense flat round icon="short_text" @click="left = !left" />
-        <q-space />
-        <!--<q-toggle
+        <q-toolbar style="height: 75px" class="bg-white text-black">
+          <q-btn dense flat round icon="short_text" @click="left = !left" />
+          <q-space />
+          <!--<q-toggle
             v-model="dark"
             checked-icon="nights_stay"
             color="green"
             unchecked-icon="brightness_low"
             @input="darkMode(dark)"
           />--->
-        <vs-button
-          v-if="$route.path != '/menu'"
-          class="bg-negative"
-          circle
-          @click="$router.go(-1)"
-        >
-          <q-icon style="padding-right: 4px" name="chevron_left" />
-          <q-tooltip
-            content-class="bg-negative text-white shadow-4"
-            :offset="[10, 10]"
+          <vs-button
+            v-if="$route.path != '/menu'"
+            class="bg-negative"
+            circle
+            @click="$router.go(-1)"
           >
-            Atras
-          </q-tooltip>
-        </vs-button>
-        <vs-switch v-model="info.darkMode" @click="changeMode()">
-          <template #off>
-            <q-icon style="padding-right: 4px" name="close" />
-          </template>
-          <template #on>
-            <q-icon style="padding-right: 4px" name="done" />
-          </template>
-        </vs-switch>
-        <q-btn flat round dense icon="account_circle">
-          <q-menu>
-            <div class="row no-wrap q-pa-md">
-              <div class="column items-center">
-                <q-avatar size="72px">
-                  <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
-                </q-avatar>
-                <div class="text-weight-bold q-mt-md q-mb-xs">Usuario:</div>
-                <div class="text-weight">{{ info.username }}</div>
-                <div class="q-mt-md q-mb-xs"></div>
-                <div class="row">
-                  <div class="col">
-                    <q-btn
-                      color="primary"
-                      label="Cancel"
-                      push
-                      size="sm"
-                      v-close-popup
-                    />
-                  </div>
-                  <div style="margin-left: 6%"></div>
-                  <div class="col">
-                    <q-btn
-                      color="negative"
-                      label="Logout"
-                      push
-                      size="sm"
-                      @click="exit"
-                    />
+            <q-icon style="padding-right: 4px" name="chevron_left" />
+            <q-tooltip
+              content-class="bg-negative text-white shadow-4"
+              :offset="[10, 10]"
+            >
+              Atras
+            </q-tooltip>
+          </vs-button>
+          <!---//*Boton de cambio de modo*/
+          <vs-switch v-model="info.darkMode" @click="changeMode()">
+            <template #off>
+              <q-icon style="padding-right: 4px" name="close" />
+            </template>
+            <template #on>
+              <q-icon style="padding-right: 4px" name="done" />
+            </template>
+          </vs-switch>-->
+          <q-btn flat round dense icon="account_circle">
+            <q-menu>
+              <div class="row no-wrap q-pa-md">
+                <div class="column items-center">
+                  <q-avatar size="72px">
+                    <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+                  </q-avatar>
+                  <div class="text-weight-bold q-mt-md q-mb-xs">Usuario:</div>
+                  <div class="text-weight">{{ info.username }}</div>
+                  <div class="q-mt-md q-mb-xs"></div>
+                  <div class="row">
+                    <div class="col">
+                      <vs-button
+                        flat
+                        size="sm"
+                        v-close-popup
+                      >Cerrar
+                      </vs-button>
+                    </div>
+                    <div style="margin-left: 6%"></div>
+                    <div class="col">
+                      <vs-button
+                        danger
+                        size="sm"
+                        @click="exit"
+                      >
+                      Salir</vs-button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </q-menu>
-        </q-btn>
-      </q-toolbar>
-    </q-header>
+            </q-menu>
+          </q-btn>
+        </q-toolbar>
+      </q-header>
+    </div>
     <template>
       <vs-sidebar absolute v-model="active" :open.sync="left">
         <template #logo>
-          <q-img style="height: 9em; width: 9em" src="../assets/db.png" />
+          <div class="justify-center items-center">
+            <p class="row text-h6 text-center text-bold">
+              <span class="text-red">Síndria</span>
+              <span class="text-green">Mercat</span>
+            </p>
+            <q-img
+              class="row"
+              style="height: 9em; width: 9em"
+              src="https://cdn-icons.flaticon.com/png/512/1652/premium/1652122.png?token=exp=1648477376~hmac=a4853c806814d6054be7fd83a66896e5"
+            />
+          </div>
         </template>
         <div @click="left = false">
           <vs-sidebar-item to="/menu" v-ripple id="menu">
@@ -116,7 +134,7 @@
       </vs-sidebar>
     </template>
     <q-page-container>
-      <div class="q-pa-md">
+      <div class="q-pa-lg">
         <div class="text-bold text-h6" align="center">
           {{ titulo }}
         </div>
@@ -143,7 +161,7 @@
 <style>
 .my-menu-link {
   color: white;
-  background: #012d5b;
+  background: red;
 }
 </style>
 <script>
@@ -186,7 +204,7 @@ export default {
             //* Rutas de los negocios
             {
               name: "Información",
-              url: "/",
+              url: "/information",
               icon: "fact_check",
               permission: "bussines.information",
             },
@@ -259,17 +277,55 @@ body.body--dark {
   --vs-dark: 0, 0, 0;
   --vs-background-opacity: 0.6;
 }
+
 .vs-card {
   background: #eaeaea;
   color: #000;
 }
 .q-layout {
-  font-family: 'PT Sans', sans-serif;
+  font-family: "PT Sans", sans-serif;
 }
 .q-page {
-  font-family: 'PT Sans', sans-serif;
+  font-family: "PT Sans", sans-serif;
 }
 .q-menu {
-  font-family: 'PT Sans', sans-serif;
+  font-family: "PT Sans", sans-serif;
+  border-radius: 2em;
+}
+.header-backup {
+  display: block;
+  width: 100%;
+  height: 102px;
+  position: fixed;
+  top: 0;
+  z-index: 5;
+  background: linear-gradient(
+    180deg,
+    hsla(0, 0%, 97.3%, 0.95) 44%,
+    hsla(0, 0%, 97.3%, 0.46) 73%,
+    hsla(0, 0%, 100%, 0)
+  ) !important;
+  left: 0;
+}
+.q-toolbar {
+  align-items: center;
+  display: flex;
+  position: relative;
+  z-index: 0;
+  padding: 4px 16px;
+  border-radius: 1em;
+}
+.q-layout__section--marginal,
+.vs-table,
+.vs-table__header,
+.vs-table__footer,
+.vs-table__tr,
+.vs-table__thead,
+.vs-table__tr,
+.vs-table__th {
+  background-color: #fff;
+}
+.vs-table__thead .vs-table__th {
+  background: #fff;
 }
 </style>
