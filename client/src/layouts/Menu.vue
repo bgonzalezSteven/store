@@ -92,7 +92,7 @@
             <q-img
               class="row"
               style="height: 9em; width: 9em"
-              src="https://cdn-icons.flaticon.com/png/512/1652/premium/1652122.png?token=exp=1648477376~hmac=a4853c806814d6054be7fd83a66896e5"
+              src="~assets/sandia.png"
             />
           </div>
         </template>
@@ -208,7 +208,27 @@ export default {
               icon: "fact_check",
               permission: "bussines.information",
             },
+            {
+              name: "Contactos",
+              url: "/",
+              icon: "fact_check",
+              permission: "bussines.customer",
+            },
           ],
+        },        
+        {
+          name: "Inventarios",
+          url: "",
+          icon: "storefront",
+          permission: "bussines.inventories",
+          children: [
+            {
+              name: "Productos",
+              url: "/product",
+              icon: "archive",
+              permission: "bussines.inventories",
+            },
+          ]
         },
       ],
     };

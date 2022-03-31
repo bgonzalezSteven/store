@@ -15,6 +15,7 @@
     "core-js": "^3.6.5",
     "firebase": "^9.6.8",
     "quasar": "^1.0.0",
+    "v-money": "^0.8.1",
     "vue-i18n": "^8.0.0",
     "vuelidate": "^0.7.7",
     "vuesax": "^4.0.1-alpha.25"

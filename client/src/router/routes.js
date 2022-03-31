@@ -13,6 +13,10 @@ const routes = [
       { path: '/control', component: () => import('pages/Admin/Business/List.vue'), meta: { permission: 'configuration.bussines' } },
       // Rutas del negocio
       { path: '/information', component: () => import('pages/Store/Information/Form.vue'), meta: { permission: 'bussines.information' } },
+      // Rutas para los productos
+      { path: '/product', component: () => import('pages/Store/Inventory/products/List.vue'), meta: { permission: 'bussines.inventories'} },
+      { path: '/product/agg_product', component: () => import('pages/Store/Inventory/products/Form.vue'), meta: { permission: 'bussines.inventories'} },
+      { path: '/product/edit_product/:id', component: () => import('pages/Store/Inventory/products/Form.vue'), meta: { permission: 'bussines.inventories'} },
     ]
   },
 

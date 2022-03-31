@@ -70,19 +70,23 @@ class StoreController {
         })
       } else {
         info.file = `${dir}${fileName}`
-        await response.send(this.saveInformation(info))
+        response.send(await this.saveInformation(info))
       }
+    } else {
+      response.send(await this.saveInformation(info))
     }
   }
 
   async saveInformation (info) {
     const validation = await validate(info, Store.fieldValidationRules())
+    console.log(info)
     if (!validation.fails()) {
       return await Bussine.where('_id', info._id).update(info)
+    } else {
+      console.log(validation.messages())
     }
   }
   async getFile ({ request, response, params }) {
-    console.log(params.dir)
     response.download(Helpers.appRoot(`public/profilePhotos/${params.dir}`))
   }
 
