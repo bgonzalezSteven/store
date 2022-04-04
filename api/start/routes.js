@@ -65,8 +65,15 @@ addPrefixToGroup(
     // Rutas de acceso a los negocios //
     Route.get('information', 'StoreController.index')
     Route.post('information', 'StoreController.store')
-
     // Rutas de acceso a los negocios //
+
+    // Rutas para los contactos //
+    Route.get('customer/:id', 'CustomerController.show')
+    Route.get('customer', 'CustomerController.index')
+    Route.post('customer', 'CustomerController.store')
+    Route.delete('customer/:id', 'CustomerController.destroy')
+    // Rutas para los contactos //
+
 
     
   }).middleware("auth")

@@ -54,6 +54,51 @@
                       </template>
                     </vs-input>
                   </div>
+                  <div
+                    class="center content-inputs"
+                    style="padding-right: 10px"
+                  >
+                    <vs-input
+                      autofocus
+                      style="width: 13em; padding-top: 1em"
+                      block
+                      success
+                      class="col col q-ma-sm"
+                      placeholder="123129084718"
+                      v-model="form.barcode"
+                      label="Código de barras"
+                      type="number"
+                    >
+                      <template
+                        v-if="!$v.form.barcode.required"
+                        #message-danger
+                      >
+                        Requerido
+                      </template>
+                    </vs-input>
+                  </div>
+                  <div
+                    class="center content-inputs"
+                    style="padding-right: 10px"
+                  >
+                    <vs-input
+                      autofocus
+                      style="width: 8em; padding-top: 1em"
+                      block
+                      success
+                      class="col col q-ma-sm"
+                      placeholder="123129084718"
+                      v-model="form.unitKeeping"
+                      label="Unidad de medida"
+                    >
+                      <template
+                        v-if="!$v.form.unitKeeping.required"
+                        #message-danger
+                      >
+                        Requerido
+                      </template>
+                    </vs-input>
+                  </div>
                 </section>
               </q-card-section>
             </q-card-section>
@@ -68,7 +113,6 @@
                     style="padding-right: 10px"
                   >
                     <vs-input
-                      autofocus
                       style="width: 13em; padding-top: 1em"
                       block
                       success
@@ -88,16 +132,15 @@
                     style="padding-right: 10px"
                   >
                     <vs-input
-                      autofocus
                       style="width: 8em; padding-top: 1em"
                       block
                       success
                       class="col col q-ma-sm"
                       placeholder="1.12"
-                      v-model="form.iva"
+                      v-model="form.percentage"
                       label="Iva"
                     >
-                      <template v-if="!$v.form.iva.required" #message-danger>
+                      <template v-if="!$v.form.percentage.required" #message-danger>
                         Requerido
                       </template>
                     </vs-input>
@@ -136,14 +179,16 @@ export default {
       name: { required },
       description: { required },
       price: { required },
-      iva: { required },
+      percentage: { required },
       total: { required },
+      barcode: { required },
+      unitKeeping: { required },
     },
   },
   computed: {
     total() {
-      return this.addProduct();
-    },
+      return this.addProduct(this.iva);
+    }
   },
   mounted() {
     this.$emit("setTittle", "Producto");
@@ -152,6 +197,7 @@ export default {
   directives: { money: VMoney },
   data() {
     return {
+      iva: '',
       form: {},
       categories: [],
       money: {
@@ -170,15 +216,16 @@ export default {
       const val = (price / 1).toFixed(3).replace('.', ',')
       return val.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
-    addProduct() {
+    addProduct(iva) {
       const value = currency(this.form.price)
-      this.form.total = (value.multiply((this.form.iva)));
-      return (this.formatPrice(this.form.total));
+      this.form.total = (value.multiply((iva)));
+      return (this.form.total = (this.formatPrice(this.form.total)));
     },
     async save() {
       this.$v.form.$touch();
       if (this.$v.form.$error) {
         this.$vs.notification({
+          icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
           color: "danger",
           position: "center",
           title: "¡Ojo!",
@@ -191,11 +238,12 @@ export default {
     },
     async information() {
       this.$q.loading.show();
-      this.$api.get("information").then((res) => {
+      await this.$api.get("information").then((res) => {
         if (res) {
           this.$q.loading.hide();
           this.money.prefix = `${res.currency === "usd" ? "$ " : "€ "} `;
-          this.form.iva = parseFloat(res.percentage);
+          this.iva = res.percentage;
+          console.log(this.iva)
         }
       });
     },

@@ -377,7 +377,7 @@
 </template>
 
 <script>
-import env from "../../../env";
+import env from "../../../../env";
 const axios = require("axios");
 import { required } from "vuelidate/lib/validators";
 export default {
@@ -493,6 +493,9 @@ export default {
       this.$q.loading.show();
       this.$api.get("information").then((res) => {
         this.form = res;
+        this.legalStructure = this.form.legalStructure;
+        this.currency = this.form.currency;
+        this.active = this.btns.find(x => x.value == this.form.empleyersNumber).id;
         if (this.form.file) {
           this.img = `${this.baseu}${this.form.file}`;
         }
@@ -543,6 +546,7 @@ export default {
       this.$v.form.$touch();
       if (this.$v.form.$error) {
         this.$vs.notification({
+          icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
           color: "danger",
           position: "center",
           title: "¡Ojo!",

@@ -57,21 +57,15 @@
                   <div class="q-mt-md q-mb-xs"></div>
                   <div class="row">
                     <div class="col">
-                      <vs-button
-                        flat
-                        size="sm"
-                        v-close-popup
-                      >Cerrar
+                      <vs-button flat size="sm" v-close-popup
+                        >Cerrar
                       </vs-button>
                     </div>
                     <div style="margin-left: 6%"></div>
                     <div class="col">
-                      <vs-button
-                        danger
-                        size="sm"
-                        @click="exit"
+                      <vs-button danger size="sm" @click="exit">
+                        Salir</vs-button
                       >
-                      Salir</vs-button>
                     </div>
                   </div>
                 </div>
@@ -210,12 +204,30 @@ export default {
             },
             {
               name: "Contactos",
-              url: "/",
-              icon: "fact_check",
+              url: "/customer",
+              icon: "contact_page",
               permission: "bussines.customer",
             },
+            {
+              name: "Metodos de pago",
+              url: "/paypament_method",
+              icon: "add_card",
+              permission: "bussines.paypamentMethod",
+            },
+            {
+              name: "Impuestos",
+              url: "/taxes",
+              icon: "account_balance",
+              permission: "bussines.taxes",
+            },
+            {
+              name: "Empleados",
+              url: "/employee",
+              icon: "badge",
+              permission: "bussines.employee",
+            },
           ],
-        },        
+        },
         {
           name: "Inventarios",
           url: "",
@@ -228,7 +240,7 @@ export default {
               icon: "archive",
               permission: "bussines.inventories",
             },
-          ]
+          ],
         },
       ],
     };

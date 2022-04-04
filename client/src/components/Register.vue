@@ -125,6 +125,7 @@ export default {
       this.$v.form.$touch();
       if (this.$v.form.$error) {
         this.$vs.notification({
+          icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
           progress: "none",
           color: "danger",
           position: "top-center",

@@ -39,6 +39,18 @@ const roleData = [
     slug: 'bussines.inventories',
     name: 'Informacion de los Inventarios',
   },
+  {
+    slug: 'bussines.paypamentMethod',
+    name: 'Informacion de los Metodos de Pago',
+  },
+  {
+    slug: 'bussines.taxes',
+    name: 'Informacion de los Impuestos',
+  },
+  {
+    slug: 'bussines.employee',
+    name: 'Informacion de los Empleados',
+  },
 ]
 class PermissionSeeder {
   async run() {
