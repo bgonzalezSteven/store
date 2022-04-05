@@ -48,7 +48,7 @@
           </div>
           <div class="center content-inputs" style="padding-right: 10px">
             <vs-input
-              autofocus
+              
               style="width: 18em; padding-top: 0.5em"
               block
               success
@@ -63,7 +63,7 @@
           </div>
           <div class="center content-inputs" style="padding-right: 10px">
             <vs-input
-              autofocus
+              
               style="width: 18em; padding-top: 0.5em"
               block
               success
@@ -87,7 +87,7 @@
         <section class="q-pa-sm row items-center justify-center">
           <div class="center content-inputs">
             <vs-input
-              autofocus
+              
               style="width: 19em; padding-top: 1em"
               block
               success
@@ -99,7 +99,7 @@
           </div>
           <div class="center content-inputs">
             <vs-input
-              autofocus
+              
               style="width: 13em; padding-top: 1em"
               block
               success
@@ -111,7 +111,7 @@
           </div>
           <div class="center content-inputs">
             <vs-input
-              autofocus
+              
               style="width: 13em; padding-top: 1em"
               block
               success
@@ -123,7 +123,7 @@
           </div>
           <div class="center content-inputs">
             <vs-input
-              autofocus
+              
               style="width: 13em; padding-top: 1em"
               block
               success
@@ -135,7 +135,7 @@
           </div>
           <div class="center content-inputs">
             <vs-input
-              autofocus
+              
               style="width: 13em; padding-top: 1em"
               block
               success
@@ -147,7 +147,7 @@
           </div>
           <div class="center content-inputs">
             <vs-input
-              autofocus
+              
               style="width: 13em; padding-top: 1em"
               block
               success
@@ -159,7 +159,7 @@
           </div>
           <div v-if="form.type === 'company'" class="center content-inputs">
             <vs-input
-              autofocus
+              
               style="width: 13em; padding-top: 1em"
               block
               success

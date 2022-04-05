@@ -98,6 +98,12 @@
             <div v-else-if="ruta === 'paymentMethod'">
               <PaymentMethod :id="copyDate_id" />
             </div>
+            <div v-else-if="ruta === 'tax'">
+              <Tax :id="copyDate_id" />
+            </div>
+            <div v-else-if="ruta === 'employee'">
+              <Employee :id="copyDate_id" />
+            </div>
           </template>
         </q-scroll-area>
       </div>
@@ -122,6 +128,8 @@
 <script>
 import Customer from "./Customer.vue";
 import PaymentMethod from "./PaymentMethod.vue";
+import Tax from "./Tax.vue";
+import Employee from "./Employee.vue";
 export default {
   mounted() {
     this.getCustomer();
@@ -129,10 +137,12 @@ export default {
   components: {
     Customer,
     PaymentMethod,
+    Tax,
+    Employee
   },
   computed: {
-    pagesNumber () {
-      return Math.ceil(this.large / this.pagination.rowsPerPage)
+    pagesNumber() {
+      return Math.ceil(this.large / this.pagination.rowsPerPage);
     },
   },
   props: ["ruta"],
@@ -191,6 +201,7 @@ export default {
       });
     },
     async getCustomer() {
+      this.data = {};
       this.$q.loading.show();
       await this.$api.get(`${this.ruta}`).then((res) => {
         if (res.length != 0) {

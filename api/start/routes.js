@@ -81,6 +81,20 @@ addPrefixToGroup(
     Route.delete('paymentMethod/:id', 'PaymentMethodController.destroy')
     // Rutas para los productos //
 
+    // Rutas para los impuestos //
+    Route.get('tax', 'TaxController.index')
+    Route.post('tax', 'TaxController.store')
+    Route.get('tax/:id', 'TaxController.show')
+    Route.delete('tax/:id', 'TaxController.destroy')
+    // Rutas para los productos //
+
+    // Rutas para los trabajadores //
+    Route.get('employee', 'EmployeeController.index')
+    Route.post('employee', 'EmployeeController.store')
+    Route.get('employee/:id', 'EmployeeController.show')
+    Route.delete('employee/:id', 'EmployeeController.destroy')
+    // Rutas para los trabajadores //
+
 
     
   }).middleware("auth")

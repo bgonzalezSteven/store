@@ -23,7 +23,7 @@
                     style="padding-right: 10px"
                   >
                     <vs-input
-                    autofocus
+                    
                       style="width: 23em; padding-top: 1em"
                       block
                       success

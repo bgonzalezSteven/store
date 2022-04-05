@@ -3,13 +3,13 @@
     <section>
       <header>
         <section class="row">
-          <div class="col q-pa-md text-bold text-h6">Metodos de Pago</div>
+          <div class="col q-pa-md text-bold text-h6">Impuestos</div>
         </section>
         <section class="q-pa-sm row items-center justify-center">
           <div class="center content-inputs" style="padding-right: 10px">
             <vs-input
               
-              style="width: 18em; padding-top: 0.5em"
+              style="width: 10em; padding-top: 0.5em"
               block
               success
               class="col col q-ma-sm"
@@ -31,9 +31,31 @@
               v-model="form.description"
               label-placeholder="Descripción"
             >
-              <template v-if="!$v.form.description.required" #message-danger>
+              <template v-if="!$v.form.name.required" #message-danger>
                 Requerido
               </template></vs-input
+            >
+          </div>
+          <div class="center content-inputs" style="padding-right: 10px">
+            <vs-input
+              
+              style="width: 10em; padding-top: 0.5em"
+              block
+              success
+              class="col col q-ma-sm"
+              v-model.number="form.price"
+              label-placeholder="Monto"
+              type="number"
+            >
+              <template #message-danger>
+                <template  v-if="!$v.form.price.required">
+                  Requerido
+                </template>
+                <template v-else-if="!$v.form.price.numeric">
+                  Dato numerico
+              </template>
+              </template>
+            </vs-input
             >
           </div>
         </section>
@@ -50,7 +72,7 @@
   </div>
 </template>
 <script>
-import { required } from "vuelidate/lib/validators";
+import { required, numeric } from "vuelidate/lib/validators";
 export default {
   validations: {
     form: {
@@ -59,6 +81,9 @@ export default {
       },
       description: {
         required,
+      },
+      price: {
+        required, numeric
       },
     },
   },
@@ -74,7 +99,7 @@ export default {
   methods: {
     verificate(id) {
       if (id) {
-        this.$api.get(`paymentMethod/${id}`).then((res) => {
+        this.$api.get(`tax/${id}`).then((res) => {
           this.form = res;
           this.typeContact = this.form.contact_type;
         });
@@ -93,7 +118,7 @@ export default {
         });
       } else {
         this.$q.loading.show();
-        this.$api.post("paymentMethod", this.form).then((res) => {
+        this.$api.post("tax", this.form).then((res) => {
           this.$q.loading.hide();
           this.$router.go();
         });
