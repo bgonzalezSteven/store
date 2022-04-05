@@ -3,8 +3,10 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-const Customer = use('App/Models/Customer')
+
+const PaymentMethod = use('App/Models/PaymentMethod')
 const Bussine = use('App/Models/Bussine')
+const { validate } = use("Validator")
 const titles = [
   {
     name: "name",
@@ -14,28 +16,10 @@ const titles = [
     field: "name",
   },
   {
-    name: "contact_type",
+    name: "description",
     align: "center",
-    label: "Tipo de contacto",
-    field: "contact_type",
-  },
-  {
-    name: "nfi",
-    align: "center",
-    label: "NFI",
-    field: "nfi",
-  },
-  {
-    name: "phone",
-    align: "center",
-    label: "Teléfono",
-    field: "phone",
-  },
-  {
-    name: "email",
-    align: "center",
-    label: "Correo",
-    field: "email",
+    label: "Descripción",
+    field: "description",
   },
   {
     name: "actions",
@@ -44,55 +28,36 @@ const titles = [
     field: "actions",
   },
 ]
-const typesContacts = [
-  {
-    label: "No especificado",
-    value: "unspecified",
-  },
-  {
-    label: "Cliente",
-    value: "customer",
-  },
-  {
-    label: "Proveedor",
-    value: "supplier",
-  },
-  {
-    label: "Deudor",
-    value: "debtor",
-  },
-  {
-    label: "Acreedor",
-    value: "creditor",
-  },
-]
 /**
- * Resourceful controller for interacting with customers
+ * Resourceful controller for interacting with paymentmethods
  */
-class CustomerController {
+class PaymentMethodController {
   /**
-   * Show a list of all customers.
-   * GET customers
+   * Show a list of all paymentmethods.
+   * GET paymentmethods
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view, auth }) {
+  async index ({ request, response, view,  auth }) {
     const userLoggued = await auth.getUser()
     const logued = await Bussine.where('email', userLoggued.email).first()
-    const date = (await Customer.where('bussine_id', logued._id).fetch()).toJSON()
+    const date = (await PaymentMethod.where('bussine_id', logued._id).fetch()).toJSON()
     if (date.length === 0) {
       response.send(date)
     } else {
       const dates = []
       date.forEach(element => {
         dates.push({
-          _id: element._id, name: element.name, contact_type: typesContacts.find(x => x.value == element.contact_type).label, nfi: element.nfi, phone: element.phone ? element.phone : '', email: element.email ? element.email : '', actions: [
+          _id: element._id,
+          name: element.name,
+          description: element.description,
+          actions: [
             {
               icon: "edit",
-              to: `/customer/edit_customer/${element._id}`,
+              to: `/paymentMethod/edit_paymentMethod/${element._id}`,
               color: "secondary",
               title: "Editar",
             },
@@ -103,7 +68,7 @@ class CustomerController {
             }
           ]
         })
-      });
+      });      
       const info = {
         titles: titles,
         data: dates,
@@ -113,8 +78,8 @@ class CustomerController {
   }
 
   /**
-   * Render a form to be used for creating a new customer.
-   * GET customers/create
+   * Render a form to be used for creating a new paymentmethod.
+   * GET paymentmethods/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -125,28 +90,34 @@ class CustomerController {
   }
 
   /**
-   * Create/save a new customer.
-   * POST customers
+   * Create/save a new paymentmethod.
+   * POST paymentmethods
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response , auth }) {
-    const userLoggued = await auth.getUser()
-    const logued = await Bussine.where('email', userLoggued.email).first()
-    const customerData = request.all()
-    customerData.bussine_id = logued._id
-    if (customerData._id) {
-      response.status(204).send(await Customer.where('_id', customerData._id).update(customerData))
+  async store ({ request, response, auth }) {
+    const validation = await validate(request.all(), PaymentMethod.fieldValidationRules())
+    if (validation.fails()) {
+      response.unprocessableEntity(validation.messages())
     } else {
-      response.status(200).send(await Customer.create(customerData))
+      const userLoggued = await auth.getUser()
+      const logued = await Bussine.where('email', userLoggued.email).first()
+      const paymentmethod = request.only(PaymentMethod.fillable)
+      paymentmethod.bussine_id = logued._id
+      if (paymentmethod._id) {
+        response.status(204).send(await PaymentMethod.where('_id', paymentmethod._id).update(paymentmethod))
+      } else {
+        response.status(200).send(await PaymentMethod.create(paymentmethod))
+      }
     }
+    
   }
 
   /**
-   * Display a single customer.
-   * GET customers/:id
+   * Display a single paymentmethod.
+   * GET paymentmethods/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -154,12 +125,12 @@ class CustomerController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
-    response.send(await Customer.find(params.id))
+    response.send(await PaymentMethod.find(params.id))
   }
 
   /**
-   * Render a form to update an existing customer.
-   * GET customers/:id/edit
+   * Render a form to update an existing paymentmethod.
+   * GET paymentmethods/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -170,8 +141,8 @@ class CustomerController {
   }
 
   /**
-   * Update customer details.
-   * PUT or PATCH customers/:id
+   * Update paymentmethod details.
+   * PUT or PATCH paymentmethods/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -181,16 +152,16 @@ class CustomerController {
   }
 
   /**
-   * Delete a customer with id.
-   * DELETE customers/:id
+   * Delete a paymentmethod with id.
+   * DELETE paymentmethods/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
-    response.send(await Customer.where('_id',params.id).delete())
+    response.send(await PaymentMethod.where('_id',params.id).delete())
   }
 }
 
-module.exports = CustomerController
+module.exports = PaymentMethodController

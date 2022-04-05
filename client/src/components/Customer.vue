@@ -153,8 +153,8 @@
               success
               class="col col q-ma-sm"
               v-model="form.trade_name"
-              label="Nombre comercial"
-              placeholder="Nombre comercial"
+              label="Razón social"
+              placeholder="Razón social"
             />
           </div>
           <div v-if="form.type === 'company'" class="center content-inputs">

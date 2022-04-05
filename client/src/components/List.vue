@@ -77,7 +77,11 @@
       </q-table>
 
       <div class="row justify-center q-mt-md">
-        <q-pagination v-model="pagination.page" :max="large" direction-links />
+        <q-pagination
+          v-model="pagination.page"
+          :max="pagesNumber"
+          direction-links
+        />
       </div>
     </div>
     <vs-dialog blur prevent-close overflow-hidden v-model="dialog">
@@ -88,8 +92,11 @@
           style="height: 36em"
         >
           <template>
-            <div>
+            <div v-if="ruta === 'customer'">
               <Customer :id="copyDate_id" />
+            </div>
+            <div v-else-if="ruta === 'paymentMethod'">
+              <PaymentMethod :id="copyDate_id" />
             </div>
           </template>
         </q-scroll-area>
@@ -114,12 +121,19 @@
 </template>
 <script>
 import Customer from "./Customer.vue";
+import PaymentMethod from "./PaymentMethod.vue";
 export default {
   mounted() {
     this.getCustomer();
   },
   components: {
     Customer,
+    PaymentMethod,
+  },
+  computed: {
+    pagesNumber () {
+      return Math.ceil(this.large / this.pagination.rowsPerPage)
+    },
   },
   props: ["ruta"],
   data() {
@@ -170,7 +184,7 @@ export default {
     },
     async DeleteItem(id) {
       this.$q.loading.show();
-      this.$api.delete(`${this.ruta}/${id}`).then(() => {
+      await this.$api.delete(`${this.ruta}/${id}`).then(() => {
         this.$q.loading.hide();
         this.deleteDialog = false;
         this.getCustomer();

@@ -74,6 +74,13 @@ addPrefixToGroup(
     Route.delete('customer/:id', 'CustomerController.destroy')
     // Rutas para los contactos //
 
+    // Rutas para metodos de pago //
+    Route.get('paymentMethod', 'PaymentMethodController.index')
+    Route.post('paymentMethod', 'PaymentMethodController.store')
+    Route.get('paymentMethod/:id', 'PaymentMethodController.show')
+    Route.delete('paymentMethod/:id', 'PaymentMethodController.destroy')
+    // Rutas para los productos //
+
 
     
   }).middleware("auth")
