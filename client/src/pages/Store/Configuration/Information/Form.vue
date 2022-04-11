@@ -491,6 +491,8 @@ export default {
     async information() {
       this.$q.loading.show();
       this.$api.get("information").then((res) => {
+        this.form = res;
+        this.$q.loading.hide();
         if (res) {
           this.legalStructure = this.form.legalStructure;
           this.currency = this.form.currency;
@@ -501,8 +503,6 @@ export default {
             this.img = `${this.baseu}${this.form.file}`;
           }
         }
-        this.form = res;
-        this.$q.loading.hide();
       });
     },
     img_default() {
