@@ -23,7 +23,6 @@
                     style="padding-right: 10px"
                   >
                     <vs-input
-                    
                       style="width: 23em; padding-top: 1em"
                       block
                       success
@@ -197,7 +196,10 @@
                       v-model="form.postalCode"
                       label="Codigo Postal"
                     >
-                      <template v-if="!$v.form.postalCode.required" #message-danger>
+                      <template
+                        v-if="!$v.form.postalCode.required"
+                        #message-danger
+                      >
                         Requerido
                       </template></vs-input
                     >
@@ -297,9 +299,8 @@
               </q-card-section>
             </q-card-section>
             <q-card-section>
-              <q-card-section>
-                </q-card-section>
-                </q-card-section>
+              <q-card-section> </q-card-section>
+            </q-card-section>
           </q-card>
         </section>
         <!--Div secondario donde esta la foto-->
@@ -365,13 +366,11 @@
           </q-card>
         </section>
       </section>
-        <div class="q-pt-md" style="padding-bottom: 1em;">
-          <section class="row items-center justify-center text-center">
-            <vs-button class="bg-primary" block @click="save"
-              >Guardar</vs-button
-            >
-          </section>
-        </div>
+      <div class="q-pt-md" style="padding-bottom: 1em">
+        <section class="row items-center justify-center text-center">
+          <vs-button class="bg-primary" block @click="save">Guardar</vs-button>
+        </section>
+      </div>
     </div>
   </q-page>
 </template>
@@ -412,16 +411,16 @@ export default {
       geo: "",
       baseu: "",
       active: 0,
-      currency: '',
+      currency: "",
       currencyList: [
         {
-          label: 'U.S Dolar (usd)',
-          value: 'usd',
+          label: "U.S Dolar (usd)",
+          value: "usd",
         },
         {
-          label: 'Euro (eur)',
-          value: 'eur',
-        }
+          label: "Euro (eur)",
+          value: "eur",
+        },
       ],
       structure: [
         {
@@ -492,13 +491,17 @@ export default {
     async information() {
       this.$q.loading.show();
       this.$api.get("information").then((res) => {
-        this.form = res;
-        this.legalStructure = this.form.legalStructure;
-        this.currency = this.form.currency;
-        this.active = this.btns.find(x => x.value == this.form.empleyersNumber).id;
-        if (this.form.file) {
-          this.img = `${this.baseu}${this.form.file}`;
+        if (res) {
+          this.legalStructure = this.form.legalStructure;
+          this.currency = this.form.currency;
+          this.active = this.btns.find(
+            (x) => x.value == this.form.empleyersNumber
+          ).id;
+          if (this.form.file) {
+            this.img = `${this.baseu}${this.form.file}`;
+          }
         }
+        this.form = res;
         this.$q.loading.hide();
       });
     },
@@ -517,7 +520,7 @@ export default {
           "http://api.ipapi.com/90.166.153.207?access_key=785da90d73df70ff3bcd3e3da577867a"
         )
         .then((res) => {
-          console.log(res.data)
+          console.log(res.data);
           this.form.city = res.data.city;
           this.form.postalCode = res.data.zip;
           this.form.pais = res.data.country_name;
