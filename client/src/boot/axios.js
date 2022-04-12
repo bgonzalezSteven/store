@@ -253,7 +253,6 @@ export default async ({ store, Vue }) => {
 
     store.dispatch('generals/fetchAccessToken')
     const token = (store.state.generals.sessionInfo !== null) ? store.state.generals.sessionInfo.token : false
-    console.log('token', token)
     if (token) {
       if (!config.headers) { config.headers = {} }
       config.headers = {

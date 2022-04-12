@@ -17,10 +17,9 @@ class Employee extends Model {
       nif: 'string|required',
       phone: 'string|required',
       email: 'string|required',
-      bussine_id: 'required',
       workstation: 'string|required',
       percentage: 'integer',
-      neto: 'integer'
+      neto: 'string'
     }
   }
 }

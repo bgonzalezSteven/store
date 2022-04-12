@@ -108,14 +108,21 @@ class EmployeeController {
     if (validation.fails()) {
       response.unprocessableEntity(validation.messages())
     } else {
-      const userLoggued = await auth.getUser()
-      const logued = await Bussine.where('email', userLoggued.email).first()
-      const employ = request.only(Employee.fillable)
-      employ.bussine_id = logued._id
-      if (employ._id) {
-        response.status(204).send(await Employee.where('_id', employ._id).update(employ))
+      if (((await Employee.where('bussine_id', (await Bussine.where('email', (await auth.getUser()).email).first())._id).fetch()).toJSON()).length === 5) {
+        response.status(422).unprocessableEntity([{
+          message: 'Correo ya registrado, prueba con otro',
+          status: 422
+        }])
       } else {
-        response.status(200).send(await Employee.create(employ))
+        const userLoggued = await auth.getUser()
+        const logued = await Bussine.where('email', userLoggued.email).first()
+        const employ = request.only(Employee.fillable)
+        employ.bussine_id = logued._id
+        if (employ._id) {
+          response.status(204).send(await Employee.where('_id', employ._id).update(employ))
+        } else {
+          response.status(200).send(await Employee.create(employ))
+        }
       }
     }
   }

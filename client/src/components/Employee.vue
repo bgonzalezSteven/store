@@ -257,14 +257,17 @@ export default {
               time: 4000,
             });
           } else {
+            delete this.form.percentage;
             this.form.neto = this.paymetho.neto;
             this.form.entryDate = this.paymetho.entryDate;
-            this.saveChanges()
+            this.saveChanges();
           }
         } else {
           if (this.paymetho.percentage) {
+            delete this.form.neto;
+            delete this.form.entryDate;
             this.form.percentage = this.paymetho.percentage;
-            this.saveChanges()
+            this.saveChanges();
           } else {
             this.$vs.notification({
               icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
@@ -276,16 +279,31 @@ export default {
             });
           }
         }
-        /*this.$q.loading.show();
-        this.$api.post("paymentMethod", this.form).then((res) => {
-          this.$q.loading.hide();
-          this.$router.go();
-        });*/
       }
     },
-    async saveChanges () {
-      console.log(this.form, 'Desde funcion externa');
-    }
+    async saveChanges() {
+      this.$q.loading.show();
+      this.$api
+        .post(`employee`, this.form)
+        .then((res) => {
+          this.$q.loading.hide();
+          if (res) {
+            console.log(res);
+            this.$router.go();
+          }
+          if (res === undefined) {
+            this.$vs.notification({
+              icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
+              title: "Error",
+              text: "Alcanzo su limite de empleados",
+              color: "danger",
+              position: "top-center",
+              time: 4000,
+            });
+            this.$router.go();
+          }
+        })
+    },
   },
 };
 </script>
