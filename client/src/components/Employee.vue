@@ -104,12 +104,14 @@
         </vs-switch>
       </div>
 
-      <div class="center content-inputs" style="padding-right: 10px">
-        <vs-switch v-model="form.activate">
+      <!-- Modulo de usuario, activar de ser necesaria la creación de usuarios
+      
+        <div class="center content-inputs" style="padding-right: 10px">
+        <vs-switch @click="activated" v-model="activate">
           <template #off> Sin usuario </template>
           <template #on> Con usuario </template>
         </vs-switch>
-      </div>
+      </div>--->
     </section>
     <section v-if="!paymethodList">
       <section class="row">
@@ -197,6 +199,7 @@ export default {
   props: ["id"],
   data() {
     return {
+      activate: false,
       money: {
         decimal: ".",
         thousands: ",",
@@ -204,9 +207,7 @@ export default {
         precision: 2,
         masked: true /* doesn't work with directive */,
       },
-      form: {
-        activate: false,
-      },
+      form: {},
       paymethodList: false,
       paymetho: {},
     };
@@ -216,6 +217,9 @@ export default {
     this.information();
   },
   methods: {
+    activated () {
+      this.form.activate = this.activate
+    },
     async information() {
       this.$q.loading.show();
       await this.$api.get("information").then((res) => {
@@ -233,6 +237,7 @@ export default {
             this.paymethodList = true;
             this.paymetho.neto = this.form.neto;
             this.paymetho.entryDate = this.form.entryDate;
+            this.activate = this.form.activate;
           }
         });
       }
@@ -292,7 +297,7 @@ export default {
         if (res) {
           console.log(res);
           this.$router.go();
-        }else if (res === undefined) {
+        } else if (res === undefined) {
           this.$vs.notification({
             icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
             title: "Error",

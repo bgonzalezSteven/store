@@ -21,6 +21,7 @@ class Employee extends Model {
       percentage: 'integer',
       neto: 'string',
       entryDate: 'string',
+      activate: 'boolean',
     }
   }
 }

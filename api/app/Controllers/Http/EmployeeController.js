@@ -104,6 +104,7 @@ class EmployeeController {
    * @param {Response} ctx.response
    */
   async store ({ request, response, auth }) {
+    const dateForUser = request.all()
     const userLoggued = await auth.getUser()
     const validation = await validate(request.all(), Employee.fieldValidationRules())
     if (validation.fails()) {
@@ -117,6 +118,7 @@ class EmployeeController {
       } else {
         const logued = await Bussine.where('email', userLoggued.email).first()
         const employ = request.only(Employee.fillable)
+        console.log(dateForUser, 'qlq')
         employ.bussine_id = logued._id
         if (employ._id) {
           response.send(await Employee.where('_id', employ._id).update(employ))
