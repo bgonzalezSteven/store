@@ -493,7 +493,7 @@ export default {
       this.$api.get("information").then((res) => {
         this.form = res;
         this.$q.loading.hide();
-        if (res) {
+        if (res.currency) {
           this.legalStructure = this.form.legalStructure;
           this.currency = this.form.currency;
           this.active = this.btns.find(
