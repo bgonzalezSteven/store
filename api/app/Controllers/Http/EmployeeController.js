@@ -104,17 +104,17 @@ class EmployeeController {
    * @param {Response} ctx.response
    */
   async store ({ request, response, auth }) {
+    const userLoggued = await auth.getUser()
     const validation = await validate(request.all(), Employee.fieldValidationRules())
     if (validation.fails()) {
       response.unprocessableEntity(validation.messages())
     } else {
-      if (((await Employee.where('bussine_id', (await Bussine.where('email', (await auth.getUser()).email).first())._id).fetch()).toJSON()).length === 5) {
+      if (((await Employee.where('bussine_id', (await Bussine.where('email', (await auth.getUser()).email).first())._id).fetch()).toJSON()).length === (parseInt(((await Bussine.where('email', userLoggued.email).first()).empleyersNumber).substr(-1)))) {
         response.status(422).unprocessableEntity([{
           message: 'Correo ya registrado, prueba con otro',
           status: 422
         }])
       } else {
-        const userLoggued = await auth.getUser()
         const logued = await Bussine.where('email', userLoggued.email).first()
         const employ = request.only(Employee.fillable)
         employ.bussine_id = logued._id

@@ -283,26 +283,25 @@ export default {
     },
     async saveChanges() {
       this.$q.loading.show();
-      this.$api
-        .post(`employee`, this.form)
-        .then((res) => {
-          this.$q.loading.hide();
-          if (res) {
-            console.log(res);
+      this.$api.post(`employee`, this.form).then((res) => {
+        this.$q.loading.hide();
+        if (res) {
+          console.log(res);
+          this.$router.go();
+        }
+        if (res === undefined) {
+          this.$vs.notification({
+            icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
+            title: "Error",
+            text: "Alcanzo su limite de empleados",
+            color: "danger",
+            position: "top-center",
+          });
+          setTimeout(() => {
             this.$router.go();
-          }
-          if (res === undefined) {
-            this.$vs.notification({
-              icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
-              title: "Error",
-              text: "Alcanzo su limite de empleados",
-              color: "danger",
-              position: "top-center",
-              time: 4000,
-            });
-            this.$router.go();
-          }
-        })
+          }, 3000);
+        }
+      });
     },
   },
 };
