@@ -7,7 +7,7 @@ class Employee extends Model {
   static hidden = ['created_at', 'updated_at', 'bussine_id']
   
   static get fillable() {
-    return ['_id','name', 'lastname', 'nif', 'phone', 'email', 'workstation', 'percentage', 'neto']
+    return ['_id','name','entryDate', 'lastname', 'nif', 'phone', 'email', 'workstation', 'percentage', 'neto']
   }
   static fieldValidationRules() {
     return {
@@ -19,7 +19,8 @@ class Employee extends Model {
       email: 'string|required',
       workstation: 'string|required',
       percentage: 'integer',
-      neto: 'string'
+      neto: 'string',
+      entryDate: 'string',
     }
   }
 }

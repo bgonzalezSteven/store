@@ -3,6 +3,7 @@
   <div>
     <div class="center">
       <q-table
+        dense
         :pagination.sync="pagination"
         hide-pagination
         :filter="filter"
@@ -138,7 +139,7 @@ export default {
     Customer,
     PaymentMethod,
     Tax,
-    Employee
+    Employee,
   },
   computed: {
     pagesNumber() {
@@ -175,7 +176,7 @@ export default {
         sortBy: "desc",
         descending: false,
         page: 1,
-        rowsPerPage: 3,
+        rowsPerPage: 6,
         // rowsNumber: xx if getting data from a server
       },
     };

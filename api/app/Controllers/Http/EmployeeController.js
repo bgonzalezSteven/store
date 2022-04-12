@@ -119,9 +119,9 @@ class EmployeeController {
         const employ = request.only(Employee.fillable)
         employ.bussine_id = logued._id
         if (employ._id) {
-          response.status(204).send(await Employee.where('_id', employ._id).update(employ))
+          response.send(await Employee.where('_id', employ._id).update(employ))
         } else {
-          response.status(200).send(await Employee.create(employ))
+          response.send(await Employee.create(employ))
         }
       }
     }

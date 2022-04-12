@@ -227,9 +227,13 @@ export default {
     },
     verificate(id) {
       if (id) {
-        this.$api.get(`paymentMethod/${id}`).then((res) => {
+        this.$api.get(`employee/${id}`).then((res) => {
           this.form = res;
-          this.typeContact = this.form.contact_type;
+          if (this.form.neto) {
+            this.paymethodList = true;
+            this.paymetho.neto = this.form.neto;
+            this.paymetho.entryDate = this.form.entryDate;
+          }
         });
       }
     },
@@ -288,8 +292,7 @@ export default {
         if (res) {
           console.log(res);
           this.$router.go();
-        }
-        if (res === undefined) {
+        }else if (res === undefined) {
           this.$vs.notification({
             icon: `<box-icon name='bug-alt' animation='tada' flip='vertical' ></box-icon>`,
             title: "Error",
