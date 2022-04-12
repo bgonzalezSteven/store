@@ -5,7 +5,6 @@ node_modules
 # Quasar core related directories
 .quasar
 /dist
-
 # Cordova related directories and files
 /src-cordova/node_modules
 /src-cordova/platforms
@@ -19,6 +18,7 @@ node_modules
 # BEX related directories and files
 /src-bex/www
 /src-bex/js/core
+/src/env.js
 
 # Log files
 npm-debug.log*
